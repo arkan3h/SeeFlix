@@ -48,7 +48,7 @@ android {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api.themoviedb.org/3/\"",
+                value = "\"https://api.themoviedb.org/3/movie/\"",
             )
             buildConfigField(
                 type = "String",
@@ -60,7 +60,7 @@ android {
             buildConfigField(
                 type = "String",
                 name = "BASE_URL",
-                value = "\"https://api.themoviedb.org/3/\"",
+                value = "\"https://api.themoviedb.org/3/movie/\"",
             )
             buildConfigField(
                 type = "String",
