@@ -19,18 +19,17 @@
 
     <TextView
         android:id="@+id/tv_error"
+        style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Bookmark is Empty"
+        tools:text="Data Error"
         tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
