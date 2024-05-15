@@ -13,4 +13,5 @@
     <string name="text_upcoming_home">Upcoming Movies</string>
     <string name="text_top_rated_home">Top Rated</string>
     <string name="text_data_not_available">Data Not Available</string>
+    <string name="title_list_movie_placeholder">Title List Movie</string>
 </resources>
