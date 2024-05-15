@@ -36,6 +36,7 @@ import com.arkan.seeflix.presentation.home.adapter.NowPlayingAdapter
 import com.arkan.seeflix.presentation.home.adapter.PopularAdapter
 import com.arkan.seeflix.presentation.home.adapter.TopRatedAdapter
 import com.arkan.seeflix.presentation.home.adapter.UpcomingAdapter
+import com.arkan.seeflix.presentation.listmovie.ListMovieActivity
 import com.arkan.seeflix.utils.GenericViewModelFactory
 import com.arkan.seeflix.utils.proceedWhen
 
@@ -45,10 +46,12 @@ class HomeFragment : Fragment() {
         val service = SeeflixApiServices.invoke()
 
         val bannerImgHomeDataSource = BannerImgHomeApiDataSource(service)
-        val bannerImgHomeRepository: BannerImgHomeRepository = BannerImgHomeRepositoryImpl(bannerImgHomeDataSource)
+        val bannerImgHomeRepository: BannerImgHomeRepository =
+            BannerImgHomeRepositoryImpl(bannerImgHomeDataSource)
 
         val nowPlayingDataSource = NowPlayingApiDataSource(service)
-        val nowPlayingRepository: NowPlayingRepository = NowPlayingRepositoryImpl(nowPlayingDataSource)
+        val nowPlayingRepository: NowPlayingRepository =
+            NowPlayingRepositoryImpl(nowPlayingDataSource)
 
         val popularDataSource = PopularApiDataSource(service)
         val popularRepository: PopularRepository = PopularRepositoryImpl(popularDataSource)
@@ -109,6 +112,7 @@ class HomeFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         setClickAction()
+        navigateToListMovie()
         setupListData()
         getBannerImgRandom()
         getNowPlayingData()
@@ -124,6 +128,24 @@ class HomeFragment : Fragment() {
 
         binding.layoutBannerHome.ivShareBanner.setOnClickListener {
             Toast.makeText(requireContext(), "Share Ditekan", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun navigateToListMovie() {
+        binding.ivListGridNowPlaying.setOnClickListener {
+            ListMovieActivity.startActivity(requireContext(), 1)
+        }
+
+        binding.ivListGridPopular.setOnClickListener {
+            ListMovieActivity.startActivity(requireContext(), 2)
+        }
+
+        binding.ivListGridUpcoming.setOnClickListener {
+            ListMovieActivity.startActivity(requireContext(), 3)
+        }
+
+        binding.ivListGridTopRated.setOnClickListener {
+            ListMovieActivity.startActivity(requireContext(), 4)
         }
     }
 
