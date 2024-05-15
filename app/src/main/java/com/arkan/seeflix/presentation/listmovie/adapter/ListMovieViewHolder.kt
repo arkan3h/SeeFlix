@@ -12,7 +12,7 @@ class ListMovieViewHolder(
     RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Movie) {
         with(item) {
-            binding.ivMovieImage.load(item.imgUrl) {
+            binding.ivMovieImage.load("https://image.tmdb.org/t/p/w500${item.imgUrl}") {
                 crossfade(true)
             }
             itemView.setOnClickListener { itemClick(this) }
