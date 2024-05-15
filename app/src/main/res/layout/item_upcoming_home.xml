@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/iv_upcoming_img"
-        android:layout_width="100dp"
-        android:layout_height="120dp"
+        android:layout_width="160dp"
+        android:layout_height="240dp"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/avatars"/>
 
