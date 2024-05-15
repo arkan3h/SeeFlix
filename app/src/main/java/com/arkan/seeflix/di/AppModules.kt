@@ -4,6 +4,8 @@ import com.arkan.seeflix.data.datasource.BookmarkDataSource
 import com.arkan.seeflix.data.datasource.BookmarkDataSourceImpl
 import com.arkan.seeflix.data.datasource.bannerimghome.BannerImgHomeApiDataSource
 import com.arkan.seeflix.data.datasource.bannerimghome.BannerImgHomeDataSource
+import com.arkan.seeflix.data.datasource.listmovie.ListMovieApiDataSource
+import com.arkan.seeflix.data.datasource.listmovie.ListMovieDataSource
 import com.arkan.seeflix.data.datasource.nowplaying.NowPlayingApiDataSource
 import com.arkan.seeflix.data.datasource.nowplaying.NowPlayingDataSource
 import com.arkan.seeflix.data.datasource.popular.PopularApiDataSource
@@ -16,6 +18,8 @@ import com.arkan.seeflix.data.repository.BannerImgHomeRepository
 import com.arkan.seeflix.data.repository.BannerImgHomeRepositoryImpl
 import com.arkan.seeflix.data.repository.BookmarkRepository
 import com.arkan.seeflix.data.repository.BookmarkRepositoryImpl
+import com.arkan.seeflix.data.repository.ListMovieRepository
+import com.arkan.seeflix.data.repository.ListMovieRepositoryImpl
 import com.arkan.seeflix.data.repository.NowPlayingRepository
 import com.arkan.seeflix.data.repository.NowPlayingRepositoryImpl
 import com.arkan.seeflix.data.repository.PopularRepository
@@ -26,8 +30,10 @@ import com.arkan.seeflix.data.repository.UpcomingRepository
 import com.arkan.seeflix.data.repository.UpcomingRepositoryImpl
 import com.arkan.seeflix.data.source.local.database.AppDatabase
 import com.arkan.seeflix.data.source.local.database.dao.BookmarkDao
+import com.arkan.seeflix.data.source.network.services.SeeflixApiServices
 import com.arkan.seeflix.presentation.bookmark.BookmarkViewModel
 import com.arkan.seeflix.presentation.home.HomeViewModel
+import com.arkan.seeflix.presentation.listmovie.ListMovieViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
@@ -39,6 +45,11 @@ object AppModules {
             single<BookmarkDao> { get<AppDatabase>().bookmarkDao() }
         }
 
+    private val networkModule =
+        module {
+            single<SeeflixApiServices> { SeeflixApiServices.invoke() }
+        }
+
     private val datasource =
         module {
             single<BookmarkDataSource> { BookmarkDataSourceImpl(get()) }
@@ -47,6 +58,7 @@ object AppModules {
             single<PopularDataSource> { PopularApiDataSource(get()) }
             single<TopRatedDataSource> { TopRatedApiDataSource(get()) }
             single<UpcomingDataSource> { UpcomingApiDataSource(get()) }
+            single<ListMovieDataSource> { ListMovieApiDataSource(get()) }
         }
 
     private val repository =
@@ -57,17 +69,20 @@ object AppModules {
             single<PopularRepository> { PopularRepositoryImpl(get()) }
             single<UpcomingRepository> { UpcomingRepositoryImpl(get()) }
             single<TopRatedRepository> { TopRatedRepositoryImpl(get()) }
+            single<ListMovieRepository> { ListMovieRepositoryImpl(get()) }
         }
 
     private val viewModelModule =
         module {
             viewModelOf(::BookmarkViewModel)
             viewModelOf(::HomeViewModel)
+            viewModelOf(::ListMovieViewModel)
         }
 
     val modules =
         listOf(
             localModule,
+            networkModule,
             datasource,
             repository,
             viewModelModule,
