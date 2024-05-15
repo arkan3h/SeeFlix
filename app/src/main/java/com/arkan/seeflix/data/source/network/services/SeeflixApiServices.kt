@@ -12,6 +12,9 @@ import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 interface SeeflixApiServices {
+    @GET("popular")
+    suspend fun getBannerImgHome(): MoviesResponse
+
     @GET("now_playing")
     suspend fun getNowPlaying(): MoviesResponse
 

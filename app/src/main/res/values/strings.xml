@@ -6,4 +6,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_bookmark_title">My Bookmark</string>
     <string name="text_bookmark_empty">Bookmark still empty</string>
+    <string name="text_info_banner">Info</string>
+    <string name="text_share_banner">Share</string>
+    <string name="text_now_playing_home">Now Playing</string>
+    <string name="text_popular_home">Popular</string>
+    <string name="text_upcoming_home">Upcoming Movies</string>
+    <string name="text_top_rated_home">Top Rated</string>
+    <string name="text_data_not_available">Data Not Available</string>
 </resources>
