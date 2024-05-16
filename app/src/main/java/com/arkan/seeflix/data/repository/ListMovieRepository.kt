@@ -1,18 +1,57 @@
 package com.arkan.seeflix.data.repository
 
-import com.arkan.seeflix.data.datasource.listmovie.ListMovieDataSource
-import com.arkan.seeflix.data.mapper.toListMovies
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.arkan.seeflix.data.model.Movie
-import com.arkan.seeflix.utils.ResultWrapper
-import com.arkan.seeflix.utils.proceedFlow
+import com.arkan.seeflix.data.paging.ListMoviePagingSource
+import com.arkan.seeflix.data.source.network.services.SeeflixApiServices
 import kotlinx.coroutines.flow.Flow
 
 interface ListMovieRepository {
-    fun getListMovies(category: Int): Flow<ResultWrapper<List<Movie>>>
+    fun getListTopRated(): Flow<PagingData<Movie>>
+
+    fun getListUpcoming(): Flow<PagingData<Movie>>
+
+    fun getListPopular(): Flow<PagingData<Movie>>
+
+    fun getListNowPlaying(): Flow<PagingData<Movie>>
 }
 
-class ListMovieRepositoryImpl(private val dataSource: ListMovieDataSource) : ListMovieRepository {
-    override fun getListMovies(category: Int): Flow<ResultWrapper<List<Movie>>> {
-        return proceedFlow { dataSource.getListMovies(category).results.toListMovies() }
-    }
+class ListMovieRepositoryImpl(private val service: SeeflixApiServices) : ListMovieRepository {
+    override fun getListTopRated(): Flow<PagingData<Movie>> =
+        Pager(
+            pagingSourceFactory = { ListMoviePagingSource(service) },
+            config =
+                PagingConfig(
+                    pageSize = 20,
+                ),
+        ).flow
+
+    override fun getListUpcoming(): Flow<PagingData<Movie>> =
+        Pager(
+            pagingSourceFactory = { ListMoviePagingSource(service) },
+            config =
+                PagingConfig(
+                    pageSize = 20,
+                ),
+        ).flow
+
+    override fun getListPopular(): Flow<PagingData<Movie>> =
+        Pager(
+            pagingSourceFactory = { ListMoviePagingSource(service) },
+            config =
+                PagingConfig(
+                    pageSize = 20,
+                ),
+        ).flow
+
+    override fun getListNowPlaying(): Flow<PagingData<Movie>> =
+        Pager(
+            pagingSourceFactory = { ListMoviePagingSource(service) },
+            config =
+                PagingConfig(
+                    pageSize = 20,
+                ),
+        ).flow
 }

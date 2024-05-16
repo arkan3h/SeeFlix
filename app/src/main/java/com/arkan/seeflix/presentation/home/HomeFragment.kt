@@ -11,25 +11,13 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.arkan.seeflix.R
 import com.arkan.seeflix.data.datasource.bannerimghome.BannerImgHomeApiDataSource
-import com.arkan.seeflix.data.datasource.nowplaying.NowPlayingApiDataSource
-import com.arkan.seeflix.data.datasource.popular.PopularApiDataSource
-import com.arkan.seeflix.data.datasource.toprated.TopRatedApiDataSource
-import com.arkan.seeflix.data.datasource.upcoming.UpcomingApiDataSource
+import com.arkan.seeflix.data.datasource.movie.MovieApiDataSource
 import com.arkan.seeflix.data.model.BannerImgHome
-import com.arkan.seeflix.data.model.NowPlaying
-import com.arkan.seeflix.data.model.Popular
-import com.arkan.seeflix.data.model.TopRated
-import com.arkan.seeflix.data.model.Upcoming
+import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.data.repository.BannerImgHomeRepository
 import com.arkan.seeflix.data.repository.BannerImgHomeRepositoryImpl
-import com.arkan.seeflix.data.repository.NowPlayingRepository
-import com.arkan.seeflix.data.repository.NowPlayingRepositoryImpl
-import com.arkan.seeflix.data.repository.PopularRepository
-import com.arkan.seeflix.data.repository.PopularRepositoryImpl
-import com.arkan.seeflix.data.repository.TopRatedRepository
-import com.arkan.seeflix.data.repository.TopRatedRepositoryImpl
-import com.arkan.seeflix.data.repository.UpcomingRepository
-import com.arkan.seeflix.data.repository.UpcomingRepositoryImpl
+import com.arkan.seeflix.data.repository.MovieRepository
+import com.arkan.seeflix.data.repository.MovieRepositoryImpl
 import com.arkan.seeflix.data.source.network.services.SeeflixApiServices
 import com.arkan.seeflix.databinding.FragmentHomeBinding
 import com.arkan.seeflix.presentation.home.adapter.NowPlayingAdapter
@@ -49,26 +37,13 @@ class HomeFragment : Fragment() {
         val bannerImgHomeRepository: BannerImgHomeRepository =
             BannerImgHomeRepositoryImpl(bannerImgHomeDataSource)
 
-        val nowPlayingDataSource = NowPlayingApiDataSource(service)
-        val nowPlayingRepository: NowPlayingRepository =
-            NowPlayingRepositoryImpl(nowPlayingDataSource)
-
-        val popularDataSource = PopularApiDataSource(service)
-        val popularRepository: PopularRepository = PopularRepositoryImpl(popularDataSource)
-
-        val upcomingDataSource = UpcomingApiDataSource(service)
-        val upcomingRepository: UpcomingRepository = UpcomingRepositoryImpl(upcomingDataSource)
-
-        val topRatedDataSource = TopRatedApiDataSource(service)
-        val topRatedRepository: TopRatedRepository = TopRatedRepositoryImpl(topRatedDataSource)
+        val movieDataSource = MovieApiDataSource(service)
+        val movieRepository: MovieRepository = MovieRepositoryImpl(movieDataSource)
 
         GenericViewModelFactory.create(
             HomeViewModel(
                 bannerImgHomeRepository,
-                nowPlayingRepository,
-                popularRepository,
-                upcomingRepository,
-                topRatedRepository,
+                movieRepository,
             ),
         )
     }
@@ -343,19 +318,19 @@ class HomeFragment : Fragment() {
         binding.layoutBannerHome.tvDescBanner.text = data.desc
     }
 
-    private fun bindNowPlayingData(data: List<NowPlaying>) {
+    private fun bindNowPlayingData(data: List<Movie>) {
         nowPlayingAdapter.submitData(data)
     }
 
-    private fun bindPopularData(data: List<Popular>) {
+    private fun bindPopularData(data: List<Movie>) {
         popularAdapter.submitData(data)
     }
 
-    private fun bindUpcomingData(data: List<Upcoming>) {
+    private fun bindUpcomingData(data: List<Movie>) {
         upcomingAdapter.submitData(data)
     }
 
-    private fun bindTopRatedData(data: List<TopRated>) {
+    private fun bindTopRatedData(data: List<Movie>) {
         topRatedAdapter.submitData(data)
     }
 }

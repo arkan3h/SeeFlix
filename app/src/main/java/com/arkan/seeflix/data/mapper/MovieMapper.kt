@@ -1,14 +1,14 @@
 package com.arkan.seeflix.data.mapper
 
-import com.arkan.seeflix.data.model.NowPlaying
+import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.data.source.network.model.MovieItemResponse
 
-fun MovieItemResponse?.toNowPlaying() =
-    NowPlaying(
+fun MovieItemResponse?.toMovie() =
+    Movie(
         imgUrl = this?.posterPath.orEmpty(),
     )
 
-fun Collection<MovieItemResponse>?.toNowPlaying() =
+fun Collection<MovieItemResponse>?.toMovie() =
     this?.map {
-        it.toNowPlaying()
+        it.toMovie()
     } ?: listOf()

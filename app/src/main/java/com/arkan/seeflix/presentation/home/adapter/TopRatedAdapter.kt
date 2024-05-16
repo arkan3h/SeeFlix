@@ -6,32 +6,32 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.arkan.seeflix.data.model.TopRated
+import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.databinding.ItemTopRatedHomeBinding
 
-class TopRatedAdapter(private val itemClick: (TopRated) -> Unit) :
+class TopRatedAdapter(private val itemClick: (Movie) -> Unit) :
     RecyclerView.Adapter<TopRatedAdapter.ItemTopRatedViewHolder>() {
     private val dataDiffer =
         AsyncListDiffer(
             this,
-            object : DiffUtil.ItemCallback<TopRated>() {
+            object : DiffUtil.ItemCallback<Movie>() {
                 override fun areItemsTheSame(
-                    oldItem: TopRated,
-                    newItem: TopRated,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
                     return oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: TopRated,
-                    newItem: TopRated,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
                     return oldItem.hashCode() == newItem.hashCode()
                 }
             },
         )
 
-    fun submitData(data: List<TopRated>) {
+    fun submitData(data: List<Movie>) {
         dataDiffer.submitList(data)
     }
 
@@ -55,9 +55,9 @@ class TopRatedAdapter(private val itemClick: (TopRated) -> Unit) :
 
     class ItemTopRatedViewHolder(
         private val binding: ItemTopRatedHomeBinding,
-        val itemClick: (TopRated) -> Unit,
+        val itemClick: (Movie) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindView(item: TopRated) {
+        fun bindView(item: Movie) {
             with(item) {
                 binding.ivTopRatedImg.load("https://image.tmdb.org/t/p/w500${item.imgUrl}") {
                     crossfade(true)

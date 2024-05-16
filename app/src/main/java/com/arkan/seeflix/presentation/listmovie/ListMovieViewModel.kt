@@ -2,15 +2,24 @@ package com.arkan.seeflix.presentation.listmovie
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.data.repository.ListMovieRepository
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 
 class ListMovieViewModel(
     private val extras: Bundle?,
-    private val listMovieRepository: ListMovieRepository,
+    private val repo: ListMovieRepository,
 ) : ViewModel() {
-    val category = extras?.getInt(ListMovieActivity.CATEGORY_NAME)
+    val category = extras?.getInt(ListMovieActivity.CATEGORY)
 
-    fun getListMovies(category: Int) = listMovieRepository.getListMovies(category).asLiveData(Dispatchers.IO)
+    fun getListTopRated(): Flow<PagingData<Movie>> = repo.getListTopRated().cachedIn(viewModelScope)
+
+    fun getListPopular(): Flow<PagingData<Movie>> = repo.getListPopular().cachedIn(viewModelScope)
+
+    fun getListNowPlaying(): Flow<PagingData<Movie>> = repo.getListNowPlaying().cachedIn(viewModelScope)
+
+    fun getListUpcoming(): Flow<PagingData<Movie>> = repo.getListUpcoming().cachedIn(viewModelScope)
 }

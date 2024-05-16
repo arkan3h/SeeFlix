@@ -6,32 +6,32 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.arkan.seeflix.data.model.Popular
+import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.databinding.ItemPopularHomeBinding
 
-class PopularAdapter(private val itemClick: (Popular) -> Unit) :
+class PopularAdapter(private val itemClick: (Movie) -> Unit) :
     RecyclerView.Adapter<PopularAdapter.ItemPopularViewHolder>() {
     private val dataDiffer =
         AsyncListDiffer(
             this,
-            object : DiffUtil.ItemCallback<Popular>() {
+            object : DiffUtil.ItemCallback<Movie>() {
                 override fun areItemsTheSame(
-                    oldItem: Popular,
-                    newItem: Popular,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
                     return oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: Popular,
-                    newItem: Popular,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
                     return oldItem.hashCode() == newItem.hashCode()
                 }
             },
         )
 
-    fun submitData(data: List<Popular>) {
+    fun submitData(data: List<Movie>) {
         dataDiffer.submitList(data)
     }
 
@@ -55,9 +55,9 @@ class PopularAdapter(private val itemClick: (Popular) -> Unit) :
 
     class ItemPopularViewHolder(
         private val binding: ItemPopularHomeBinding,
-        val itemClick: (Popular) -> Unit,
+        val itemClick: (Movie) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindView(item: Popular) {
+        fun bindView(item: Movie) {
             with(item) {
                 binding.ivPopularImg.load("https://image.tmdb.org/t/p/w500${item.imgUrl}") {
                     crossfade(true)
