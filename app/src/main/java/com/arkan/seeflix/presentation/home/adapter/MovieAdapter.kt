@@ -6,46 +6,46 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.arkan.seeflix.data.model.Popular
-import com.arkan.seeflix.databinding.ItemPopularHomeBinding
+import com.arkan.seeflix.data.model.Movie
+import com.arkan.seeflix.databinding.ItemMovieHomeBinding
 
-class PopularAdapter(private val itemClick: (Popular) -> Unit) :
-    RecyclerView.Adapter<PopularAdapter.ItemPopularViewHolder>() {
+class MovieAdapter(private val itemClick: (Movie) -> Unit) :
+    RecyclerView.Adapter<MovieAdapter.ItemMovieViewHolder>() {
     private val dataDiffer =
         AsyncListDiffer(
             this,
-            object : DiffUtil.ItemCallback<Popular>() {
+            object : DiffUtil.ItemCallback<Movie>() {
                 override fun areItemsTheSame(
-                    oldItem: Popular,
-                    newItem: Popular,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
                     return oldItem.id == newItem.id
                 }
 
                 override fun areContentsTheSame(
-                    oldItem: Popular,
-                    newItem: Popular,
+                    oldItem: Movie,
+                    newItem: Movie,
                 ): Boolean {
                     return oldItem.hashCode() == newItem.hashCode()
                 }
             },
         )
 
-    fun submitData(data: List<Popular>) {
+    fun submitData(data: List<Movie>) {
         dataDiffer.submitList(data)
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): ItemPopularViewHolder {
+    ): ItemMovieViewHolder {
         val binding =
-            ItemPopularHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemPopularViewHolder(binding, itemClick)
+            ItemMovieHomeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ItemMovieViewHolder(binding, itemClick)
     }
 
     override fun onBindViewHolder(
-        holder: ItemPopularViewHolder,
+        holder: ItemMovieViewHolder,
         position: Int,
     ) {
         holder.bindView(dataDiffer.currentList[position])
@@ -53,13 +53,13 @@ class PopularAdapter(private val itemClick: (Popular) -> Unit) :
 
     override fun getItemCount(): Int = dataDiffer.currentList.size
 
-    class ItemPopularViewHolder(
-        private val binding: ItemPopularHomeBinding,
-        val itemClick: (Popular) -> Unit,
+    class ItemMovieViewHolder(
+        private val binding: ItemMovieHomeBinding,
+        val itemClick: (Movie) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bindView(item: Popular) {
+        fun bindView(item: Movie) {
             with(item) {
-                binding.ivPopularImg.load("https://image.tmdb.org/t/p/w500${item.imgUrl}") {
+                binding.ivMovieImg.load("https://image.tmdb.org/t/p/w500${item.imgUrl}") {
                     crossfade(true)
                 }
                 itemView.setOnClickListener { itemClick(this) }
