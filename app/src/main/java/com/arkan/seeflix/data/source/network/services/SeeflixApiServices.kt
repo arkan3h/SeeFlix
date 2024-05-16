@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import java.util.concurrent.TimeUnit
 
 interface SeeflixApiServices {
@@ -16,16 +17,28 @@ interface SeeflixApiServices {
     suspend fun getBannerImgHome(): MoviesResponse
 
     @GET("now_playing")
-    suspend fun getNowPlaying(): MoviesResponse
+    suspend fun getNowPlaying(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+    ): MoviesResponse
 
     @GET("popular")
-    suspend fun getPopular(): MoviesResponse
+    suspend fun getPopular(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+    ): MoviesResponse
 
     @GET("upcoming")
-    suspend fun getUpcoming(): MoviesResponse
+    suspend fun getUpcoming(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+    ): MoviesResponse
 
     @GET("top_rated")
-    suspend fun getTopRated(): MoviesResponse
+    suspend fun getTopRated(
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+    ): MoviesResponse
 
     @GET("{id}")
     suspend fun getMovieDetail(

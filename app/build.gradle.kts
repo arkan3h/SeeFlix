@@ -115,6 +115,8 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("com.airbnb.android:lottie:3.4.0")
+    implementation(libs.paging.runtime)
+
     testImplementation(libs.junit)
     testImplementation(libs.mockk.agent)
     testImplementation(libs.coroutine.test)
