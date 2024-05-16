@@ -50,7 +50,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_now_playing"
-            tools:listitem="@layout/item_now_playing_home"/>
+            tools:listitem="@layout/item_movie_home"/>
 
         <TextView
             android:id="@+id/tv_popular"
@@ -86,7 +86,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_popular"
-            tools:listitem="@layout/item_popular_home"/>
+            tools:listitem="@layout/item_movie_home"/>
 
         <TextView
             android:id="@+id/tv_upcoming"
@@ -122,7 +122,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_upcoming"
-            tools:listitem="@layout/item_upcoming_home"/>
+            tools:listitem="@layout/item_movie_home"/>
 
         <TextView
             android:id="@+id/tv_top_rated"
@@ -158,7 +158,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_top_rated"
-            tools:listitem="@layout/item_top_rated_home"/>
+            tools:listitem="@layout/item_movie_home"/>
 
         <include
             android:id="@+id/layout_state"

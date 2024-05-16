@@ -1,5 +1,6 @@
 package com.arkan.seeflix.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,92 +8,41 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import coil.load
 import com.arkan.seeflix.R
-import com.arkan.seeflix.data.datasource.bannerimghome.BannerImgHomeApiDataSource
-import com.arkan.seeflix.data.datasource.nowplaying.NowPlayingApiDataSource
-import com.arkan.seeflix.data.datasource.popular.PopularApiDataSource
-import com.arkan.seeflix.data.datasource.toprated.TopRatedApiDataSource
-import com.arkan.seeflix.data.datasource.upcoming.UpcomingApiDataSource
 import com.arkan.seeflix.data.model.BannerImgHome
-import com.arkan.seeflix.data.model.NowPlaying
-import com.arkan.seeflix.data.model.Popular
-import com.arkan.seeflix.data.model.TopRated
-import com.arkan.seeflix.data.model.Upcoming
-import com.arkan.seeflix.data.repository.BannerImgHomeRepository
-import com.arkan.seeflix.data.repository.BannerImgHomeRepositoryImpl
-import com.arkan.seeflix.data.repository.NowPlayingRepository
-import com.arkan.seeflix.data.repository.NowPlayingRepositoryImpl
-import com.arkan.seeflix.data.repository.PopularRepository
-import com.arkan.seeflix.data.repository.PopularRepositoryImpl
-import com.arkan.seeflix.data.repository.TopRatedRepository
-import com.arkan.seeflix.data.repository.TopRatedRepositoryImpl
-import com.arkan.seeflix.data.repository.UpcomingRepository
-import com.arkan.seeflix.data.repository.UpcomingRepositoryImpl
-import com.arkan.seeflix.data.source.network.services.SeeflixApiServices
+import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.databinding.FragmentHomeBinding
-import com.arkan.seeflix.presentation.home.adapter.NowPlayingAdapter
-import com.arkan.seeflix.presentation.home.adapter.PopularAdapter
-import com.arkan.seeflix.presentation.home.adapter.TopRatedAdapter
-import com.arkan.seeflix.presentation.home.adapter.UpcomingAdapter
+import com.arkan.seeflix.presentation.home.adapter.MovieAdapter
 import com.arkan.seeflix.presentation.listmovie.ListMovieActivity
-import com.arkan.seeflix.utils.GenericViewModelFactory
 import com.arkan.seeflix.utils.proceedWhen
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: HomeViewModel by viewModels {
-        val service = SeeflixApiServices.invoke()
+    private var randomMovie: BannerImgHome? = null
+    private val viewModel: HomeViewModel by viewModel()
 
-        val bannerImgHomeDataSource = BannerImgHomeApiDataSource(service)
-        val bannerImgHomeRepository: BannerImgHomeRepository =
-            BannerImgHomeRepositoryImpl(bannerImgHomeDataSource)
-
-        val nowPlayingDataSource = NowPlayingApiDataSource(service)
-        val nowPlayingRepository: NowPlayingRepository =
-            NowPlayingRepositoryImpl(nowPlayingDataSource)
-
-        val popularDataSource = PopularApiDataSource(service)
-        val popularRepository: PopularRepository = PopularRepositoryImpl(popularDataSource)
-
-        val upcomingDataSource = UpcomingApiDataSource(service)
-        val upcomingRepository: UpcomingRepository = UpcomingRepositoryImpl(upcomingDataSource)
-
-        val topRatedDataSource = TopRatedApiDataSource(service)
-        val topRatedRepository: TopRatedRepository = TopRatedRepositoryImpl(topRatedDataSource)
-
-        GenericViewModelFactory.create(
-            HomeViewModel(
-                bannerImgHomeRepository,
-                nowPlayingRepository,
-                popularRepository,
-                upcomingRepository,
-                topRatedRepository,
-            ),
-        )
-    }
-
-    private val nowPlayingAdapter: NowPlayingAdapter by lazy {
-        NowPlayingAdapter {
+    private val nowPlayingAdapter: MovieAdapter by lazy {
+        MovieAdapter {
 //            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
-    private val popularAdapter: PopularAdapter by lazy {
-        PopularAdapter {
+    private val popularAdapter: MovieAdapter by lazy {
+        MovieAdapter {
 //            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
-    private val upcomingAdapter: UpcomingAdapter by lazy {
-        UpcomingAdapter {
+    private val upcomingAdapter: MovieAdapter by lazy {
+        MovieAdapter {
 //            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
-    private val topRatedAdapter: TopRatedAdapter by lazy {
-        TopRatedAdapter {
+    private val topRatedAdapter: MovieAdapter by lazy {
+        MovieAdapter {
 //            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
@@ -111,7 +61,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        setClickAction()
         navigateToListMovie()
         setupListData()
         getBannerImgRandom()
@@ -119,15 +68,16 @@ class HomeFragment : Fragment() {
         getPopularData()
         getUpcomingData()
         getTopRatedData()
+        setClickAction()
     }
 
     private fun setClickAction() {
-        binding.layoutBannerHome.ivInfoBanner.setOnClickListener {
+        binding.layoutBannerHome.ibInfoBanner.setOnClickListener {
             Toast.makeText(requireContext(), "Info Ditekan", Toast.LENGTH_SHORT).show()
         }
 
-        binding.layoutBannerHome.ivShareBanner.setOnClickListener {
-            Toast.makeText(requireContext(), "Share Ditekan", Toast.LENGTH_SHORT).show()
+        binding.layoutBannerHome.ibShareBanner.setOnClickListener {
+            randomMovie?.let { data -> shareMovie(data) }
         }
     }
 
@@ -169,8 +119,8 @@ class HomeFragment : Fragment() {
             it.proceedWhen(
                 doOnSuccess = {
                     it.payload?.let { data ->
-                        val dataRandom = setupBannerImgRandom(data)
-                        bindBannerImgRandomData(dataRandom)
+                        randomMovie = setupBannerImgRandom(data)
+                        bindBannerImgRandomData(randomMovie!!)
                     }
                     binding.layoutState.root.isVisible = false
                     binding.layoutState.pbLoading.isVisible = false
@@ -331,6 +281,17 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun shareMovie(movie: BannerImgHome) {
+        val shareIntent =
+            Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.imgUrl}")
+            }
+        startActivity(Intent.createChooser(
+            shareIntent,
+            "Share Movie"))
+    }
+
     private fun setupBannerImgRandom(data: List<BannerImgHome>): BannerImgHome {
         return data.random()
     }
@@ -343,19 +304,19 @@ class HomeFragment : Fragment() {
         binding.layoutBannerHome.tvDescBanner.text = data.desc
     }
 
-    private fun bindNowPlayingData(data: List<NowPlaying>) {
+    private fun bindNowPlayingData(data: List<Movie>) {
         nowPlayingAdapter.submitData(data)
     }
 
-    private fun bindPopularData(data: List<Popular>) {
+    private fun bindPopularData(data: List<Movie>) {
         popularAdapter.submitData(data)
     }
 
-    private fun bindUpcomingData(data: List<Upcoming>) {
+    private fun bindUpcomingData(data: List<Movie>) {
         upcomingAdapter.submitData(data)
     }
 
-    private fun bindTopRatedData(data: List<TopRated>) {
+    private fun bindTopRatedData(data: List<Movie>) {
         topRatedAdapter.submitData(data)
     }
 }
