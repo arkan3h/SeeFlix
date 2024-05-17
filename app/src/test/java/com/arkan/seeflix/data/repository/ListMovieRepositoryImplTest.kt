@@ -26,14 +26,14 @@ class ListMovieRepositoryImplTest {
 
     private val item1 =
         MovieItemResponse(
-            id = 1,
+            id = "1",
             title = "title",
             posterPath = "imgurl",
             overview = "overview",
         )
     private val item2 =
         MovieItemResponse(
-            id = 2,
+            id = "2",
             title = "title2",
             posterPath = "imgurl2",
             overview = "overview2",

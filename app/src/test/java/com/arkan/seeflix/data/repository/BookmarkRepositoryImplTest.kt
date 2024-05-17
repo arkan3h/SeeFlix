@@ -3,6 +3,7 @@ package com.arkan.seeflix.data.repository
 import app.cash.turbine.test
 import com.arkan.seeflix.data.datasource.bookmark.BookmarkDataSource
 import com.arkan.seeflix.data.model.Bookmark
+import com.arkan.seeflix.data.model.Detail
 import com.arkan.seeflix.data.source.local.database.entity.BookmarkEntity
 import com.arkan.seeflix.utils.ResultWrapper
 import io.mockk.MockKAnnotations
@@ -41,6 +42,17 @@ class BookmarkRepositoryImplTest {
         Bookmark(
             movieId = "1",
             moviePosterPath = "aaa",
+        )
+    private val mockDetail =
+        Detail(
+            backdropPath = "aaa",
+            id = "111",
+            imdbId = "aaa",
+            overview = "aaa",
+            posterPath = "aaa",
+            releaseDate = "aaa",
+            title = "aaa",
+            voteAverage = 9.0,
         )
 
     @Before
@@ -177,7 +189,7 @@ class BookmarkRepositoryImplTest {
             coEvery {
                 ds.addBookmark(any())
             } returns 1
-            repo.addBookmark(mockProduct).map {
+            repo.addBookmark(mockDetail).map {
                 delay(100)
                 it
             }.test {
@@ -201,7 +213,7 @@ class BookmarkRepositoryImplTest {
             coEvery {
                 ds.addBookmark(any())
             } returns 1
-            repo.addBookmark(mockProduct).map {
+            repo.addBookmark(mockDetail).map {
                 delay(100)
                 it
             }.test {
@@ -225,7 +237,7 @@ class BookmarkRepositoryImplTest {
             coEvery {
                 ds.addBookmark(any())
             } throws IllegalStateException("Mock Error")
-            repo.addBookmark(mockProduct).map {
+            repo.addBookmark(mockDetail).map {
                 delay(100)
                 it
             }.test {
