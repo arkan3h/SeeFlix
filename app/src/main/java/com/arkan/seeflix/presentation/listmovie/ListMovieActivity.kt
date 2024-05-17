@@ -3,10 +3,15 @@ package com.arkan.seeflix.presentation.listmovie
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.arkan.seeflix.R
 import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.databinding.ActivityListMovieBinding
+import com.arkan.seeflix.presentation.detail.DetailActivity
 import com.arkan.seeflix.presentation.listmovie.adapter.ListMovieAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -30,7 +35,13 @@ class ListMovieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.list_movie)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         setupListMovies()
         clickBackButton()
         bindListMovies()
@@ -100,7 +111,7 @@ class ListMovieActivity : AppCompatActivity() {
     }
 
     private fun navigateToDetail(item: Movie) {
-//        DetailMenuActivity.startActivity(requireContext(), item)
+        DetailActivity.startActivity(this, item.id)
     }
 
     companion object {

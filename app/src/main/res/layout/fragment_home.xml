@@ -8,7 +8,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp">
 
         <include
             android:id="@+id/layout_banner_home"
@@ -23,8 +24,9 @@
             android:text="@string/text_now_playing_home"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="8dp"
+            android:textColor="@color/md_theme_onBackground"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_banner_home"/>
 
@@ -33,10 +35,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_list_grid_black"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_banner_home"/>
+            app:layout_constraintTop_toTopOf="@id/tv_now_playing"
+            app:layout_constraintBottom_toBottomOf="@id/tv_now_playing"
+            app:tint="@color/md_theme_onBackground" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_now_playing"
@@ -44,8 +47,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="8dp"
             android:clipToPadding="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
@@ -59,8 +61,9 @@
             android:text="@string/text_popular_home"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="8dp"
+            android:textColor="@color/md_theme_onBackground"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_now_playing"/>
 
@@ -69,10 +72,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_list_grid_black"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_now_playing"/>
+            app:layout_constraintTop_toTopOf="@id/tv_popular"
+            app:layout_constraintBottom_toBottomOf="@id/tv_popular"
+            app:tint="@color/md_theme_onBackground"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_popular"
@@ -80,8 +84,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="8dp"
             android:clipToPadding="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,8 +98,9 @@
             android:text="@string/text_upcoming_home"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="8dp"
+            android:textColor="@color/md_theme_onBackground"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_popular"/>
 
@@ -105,10 +109,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_list_grid_black"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_popular"/>
+            app:layout_constraintTop_toTopOf="@id/tv_upcoming"
+            app:layout_constraintBottom_toBottomOf="@id/tv_upcoming"
+            app:tint="@color/md_theme_onBackground"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_upcoming"
@@ -116,8 +121,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="8dp"
             android:clipToPadding="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
@@ -131,8 +135,9 @@
             android:text="@string/text_top_rated_home"
             android:textStyle="bold"
             android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="8dp"
+            android:textColor="@color/md_theme_onBackground"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_upcoming"/>
 
@@ -141,10 +146,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/ic_list_grid_black"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_upcoming"/>
+            app:layout_constraintTop_toTopOf="@id/tv_top_rated"
+            app:layout_constraintBottom_toBottomOf="@id/tv_top_rated"
+            app:tint="@color/md_theme_onBackground"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_top_rated"
@@ -152,8 +158,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
+            android:layout_marginHorizontal="8dp"
             android:clipToPadding="true"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
@@ -164,7 +169,7 @@
             android:id="@+id/layout_state"
             layout="@layout/layout_content_state"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
