@@ -60,9 +60,9 @@
     <string name="txt_date">12/12/2020</string>
     <string name="txt_overview">Film Laskar Pelangi ini bercerita mengenai kehidupan anak-anak di desa Gantong, Pulau Belitung pada masa sekolahnya. Diawali dengan pembukaan sekolah di SD Muhammadiyah Gantong yang hanya dihadiri 9 orang, Bapak Harfan selaku kepala sekolah sempat ingin menyerah dan menutup sekolah. Namun Bu Muslimah sebagai salah satu pengajar di SD tersebut tidak patah semangat, iapun berinisiatif untuk mencari 1 lagi murid yang mendaftar. Hingga pada akhirnya, SD Muhammadiyah Gantong kedatangan 2 siswa baru bernama Harun dan Lintang, yaitu siswa dengan keterbatasan ekonomi namun kepintaran yang luar biasa.</string>
     <string name="txt_rating">3.5</string>
-    <string name="txt_add_to_bookmark">Add to Bookmark</string>
     <string name="txt_share">Share</string>
-    <string name="txt_add_bookmark">Tambahkan ke Bookmark</string>
+    <string name="txt_add_bookmark">Add Bookmark</string>
+    <string name="txt_remove_bookmark">Remove Bookmark</string>
     <string name="desc_iv_icon_back">desc_iv_icon_back\n</string>
     <string name="tv_share">Bagikan</string>
 </resources>

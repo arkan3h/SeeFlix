@@ -22,8 +22,8 @@
         </activity>
         <activity
             android:name=".presentation.detail.DetailActivity"
-            android:exported="false"
-            android:theme="@style/Theme.SeeFlix" />
+            android:exported="false" >
+        </activity>
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true">

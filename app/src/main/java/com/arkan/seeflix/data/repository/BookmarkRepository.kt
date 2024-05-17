@@ -1,9 +1,10 @@
 package com.arkan.seeflix.data.repository
 
-import com.arkan.seeflix.data.datasource.BookmarkDataSource
+import com.arkan.seeflix.data.datasource.bookmark.BookmarkDataSource
 import com.arkan.seeflix.data.mapper.toBookmarkEntity
 import com.arkan.seeflix.data.mapper.toBookmarkList
 import com.arkan.seeflix.data.model.Bookmark
+import com.arkan.seeflix.data.model.Detail
 import com.arkan.seeflix.data.source.local.database.entity.BookmarkEntity
 import com.arkan.seeflix.utils.ResultWrapper
 import com.arkan.seeflix.utils.proceed
@@ -19,7 +20,7 @@ interface BookmarkRepository {
 
     fun checkBookmarkById(movieId: String): Flow<List<BookmarkEntity>>
 
-    fun addBookmark(bookmark: Bookmark): Flow<ResultWrapper<Boolean>>
+    fun addBookmark(detail: Detail): Flow<ResultWrapper<Boolean>>
 
     fun deleteBookmark(bookmark: Bookmark): Flow<ResultWrapper<Boolean>>
 
@@ -43,7 +44,6 @@ class BookmarkRepositoryImpl(private val datasource: BookmarkDataSource) : Bookm
                 emit(ResultWrapper.Error(Exception(it)))
             }.onStart {
                 emit(ResultWrapper.Loading())
-                delay(2000)
             }
     }
 
@@ -51,13 +51,13 @@ class BookmarkRepositoryImpl(private val datasource: BookmarkDataSource) : Bookm
         return datasource.checkBookmarkById(movieId)
     }
 
-    override fun addBookmark(bookmark: Bookmark): Flow<ResultWrapper<Boolean>> {
+    override fun addBookmark(detail: Detail): Flow<ResultWrapper<Boolean>> {
         return proceedFlow {
             val affectedRow =
                 datasource.addBookmark(
                     BookmarkEntity(
-                        movieId = bookmark.movieId,
-                        moviePosterPath = bookmark.moviePosterPath,
+                        movieId = detail.id,
+                        moviePosterPath = detail.posterPath,
                     ),
                 )
             delay(2000)
