@@ -21,7 +21,7 @@ interface ListMovieRepository {
 class ListMovieRepositoryImpl(private val service: SeeflixApiServices) : ListMovieRepository {
     override fun getListTopRated(): Flow<PagingData<Movie>> =
         Pager(
-            pagingSourceFactory = { ListMoviePagingSource(service) },
+            pagingSourceFactory = { ListMoviePagingSource(service, 4) },
             config =
                 PagingConfig(
                     pageSize = 20,
@@ -30,7 +30,7 @@ class ListMovieRepositoryImpl(private val service: SeeflixApiServices) : ListMov
 
     override fun getListUpcoming(): Flow<PagingData<Movie>> =
         Pager(
-            pagingSourceFactory = { ListMoviePagingSource(service) },
+            pagingSourceFactory = { ListMoviePagingSource(service, 3) },
             config =
                 PagingConfig(
                     pageSize = 20,
@@ -39,7 +39,7 @@ class ListMovieRepositoryImpl(private val service: SeeflixApiServices) : ListMov
 
     override fun getListPopular(): Flow<PagingData<Movie>> =
         Pager(
-            pagingSourceFactory = { ListMoviePagingSource(service) },
+            pagingSourceFactory = { ListMoviePagingSource(service, 2) },
             config =
                 PagingConfig(
                     pageSize = 20,
@@ -48,7 +48,7 @@ class ListMovieRepositoryImpl(private val service: SeeflixApiServices) : ListMov
 
     override fun getListNowPlaying(): Flow<PagingData<Movie>> =
         Pager(
-            pagingSourceFactory = { ListMoviePagingSource(service) },
+            pagingSourceFactory = { ListMoviePagingSource(service, 1) },
             config =
                 PagingConfig(
                     pageSize = 20,

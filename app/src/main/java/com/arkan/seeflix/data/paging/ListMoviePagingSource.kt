@@ -12,15 +12,34 @@ private const val TMDB_STARTING_PAGE_INDEX = 1
 
 class ListMoviePagingSource(
     private val service: SeeflixApiServices,
+    private val category: Int,
 ) : PagingSource<Int, Movie>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
         val pageIndex = params.key ?: TMDB_STARTING_PAGE_INDEX
         return try {
             val response =
-                service.getTopRated(
-                    language = "en-US",
-                    page = pageIndex,
-                )
+                when (category) {
+                    1 ->
+                        service.getNowPlaying(
+                            language = "en-US",
+                            page = pageIndex,
+                        )
+                    2 ->
+                        service.getPopular(
+                            language = "en-US",
+                            page = pageIndex,
+                        )
+                    3 ->
+                        service.getUpcoming(
+                            language = "en-US",
+                            page = pageIndex,
+                        )
+                    else ->
+                        service.getTopRated(
+                            language = "en-US",
+                            page = pageIndex,
+                        )
+                }
             val movies = response.results.toMovie()
             val nextKey = if (movies.isEmpty()) null else pageIndex + 1
             LoadResult.Page(
