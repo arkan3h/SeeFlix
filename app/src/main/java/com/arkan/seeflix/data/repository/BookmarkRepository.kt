@@ -9,7 +9,6 @@ import com.arkan.seeflix.data.source.local.database.entity.BookmarkEntity
 import com.arkan.seeflix.utils.ResultWrapper
 import com.arkan.seeflix.utils.proceed
 import com.arkan.seeflix.utils.proceedFlow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -60,7 +59,6 @@ class BookmarkRepositoryImpl(private val datasource: BookmarkDataSource) : Bookm
                         moviePosterPath = detail.posterPath,
                     ),
                 )
-            delay(2000)
             affectedRow > 0
         }
     }
