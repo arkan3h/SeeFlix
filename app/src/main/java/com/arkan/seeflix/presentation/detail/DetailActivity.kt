@@ -5,27 +5,22 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import coil.load
-import com.arkan.seeflix.data.model.MovieDetail
-import com.arkan.seeflix.data.repository.movie.MovieRepository
 import com.arkan.seeflix.databinding.ActivityDetailBinding
-import com.arkan.seeflix.utils.proceedWhen
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
+import org.koin.android.ext.android.inject
 
 class DetailActivity : AppCompatActivity() {
-    private val binding: ActivityDetailBinding by lazy {
-        ActivityDetailBinding.inflate(layoutInflater)
-    }
 
-    private val viewModel: ViewModelDetailActivity by viewModel {
-        parametersOf(intent)
-    }
+    private lateinit var binding: ActivityDetailBinding
+    private val viewModel: ViewModelDetailActivity by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel.id?.let { setupDetailData(it) }
+
+        val id = intent.getStringExtra(ID_MOVIE)
+        id?.let { viewModel.getDetail(it) }
+
         setClickAction()
     }
 
@@ -33,64 +28,28 @@ class DetailActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             finish()
         }
-        // Button action here
+
         binding.btnShare.setOnClickListener {
-
+            val url = viewModel.link
+            openLink(url)
         }
+
+        binding.ivPoster.setOnClickListener {
+            val url = viewModel.linkImg
+            openLink(url)
+        }
+
         binding.btnAddBookmark.setOnClickListener {
-
+            // Add bookmark
         }
     }
 
-    private fun openLink() {
-        val url = viewModel.link
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
-    }
-
-    private fun setupDetailData(id: String) {
-        viewModel.getDetail(id).observe(this) {
-            it.proceedWhen(
-                doOnLoading = {
-                    // Loading state
-
-                },
-                doOnSuccess = {
-                    // Success state
-                },
-                doOnError = {
-                    // Error state
-                },
-            )
-        }
-    }
-
-    private fun bindDetailData(movieDetail: MovieDetail?) {
-        movieDetail?.let { detail ->
-            binding.ivPoster.load(detail.posterPath) {
-                // Coil load options if needed
-            }
-            // Bind other details
-        }
-    }
-
-    private fun openLinkImg() {
-        val url = viewModel.linkImg
+    private fun openLink(url: String) {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         startActivity(intent)
     }
 
     companion object {
-        const val ID_Movie = "ID_Movie"
-
-        fun startActivity(
-            context: Context,
-            id: String,
-            movieRepository: MovieRepository,
-        ) {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(ID_Movie, id)
-            context.startActivity(intent)
-        }
+        const val ID_MOVIE = "ID_Movie"
     }
 }
