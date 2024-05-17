@@ -117,6 +117,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("com.airbnb.android:lottie:3.4.0")
     implementation(libs.paging.runtime)
+    implementation(libs.shimmer)
 
     testImplementation(libs.junit)
     testImplementation(libs.mockk.agent)

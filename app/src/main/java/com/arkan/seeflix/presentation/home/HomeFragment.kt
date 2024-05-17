@@ -64,7 +64,7 @@ class HomeFragment : Fragment() {
         setClickAction()
         navigateToListMovie()
         setupListData()
-        getBannerImgRandom()
+        getBannerHome()
         getNowPlayingData()
         getPopularData()
         getUpcomingData()
@@ -84,68 +84,68 @@ class HomeFragment : Fragment() {
     }
 
     private fun navigateToListMovie() {
-        binding.ivListGridNowPlaying.setOnClickListener {
+        binding.layoutNowPlaying.ivListGridListMovie.setOnClickListener {
             ListMovieActivity.startActivity(requireContext(), 1)
         }
 
-        binding.ivListGridPopular.setOnClickListener {
+        binding.layoutPopular.ivListGridListMovie.setOnClickListener {
             ListMovieActivity.startActivity(requireContext(), 2)
         }
 
-        binding.ivListGridUpcoming.setOnClickListener {
+        binding.layoutUpcoming.ivListGridListMovie.setOnClickListener {
             ListMovieActivity.startActivity(requireContext(), 3)
         }
 
-        binding.ivListGridTopRated.setOnClickListener {
+        binding.layoutTopRated.ivListGridListMovie.setOnClickListener {
             ListMovieActivity.startActivity(requireContext(), 4)
         }
     }
 
     private fun setupListData() {
-        binding.rvNowPlaying.apply {
+        binding.layoutNowPlaying.rvListMovie.apply {
             adapter = nowPlayingAdapter
         }
-        binding.rvPopular.apply {
+        binding.layoutPopular.rvListMovie.apply {
             adapter = popularAdapter
         }
-        binding.rvUpcoming.apply {
+        binding.layoutUpcoming.rvListMovie.apply {
             adapter = upcomingAdapter
         }
-        binding.rvTopRated.apply {
+        binding.layoutTopRated.rvListMovie.apply {
             adapter = topRatedAdapter
         }
     }
 
-    private fun getBannerImgRandom() {
+    private fun getBannerHome() {
         viewModel.getBannerImgHome().observe(viewLifecycleOwner) {
             it.proceedWhen(
                 doOnSuccess = {
                     it.payload?.let { data ->
                         randomMovie = setupBannerImgRandom(data)
-                        bindBannerImgRandomData(randomMovie!!)
+                        bindBannerHome(randomMovie!!)
                     }
                     binding.layoutState.root.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
+                    binding.bannerShimmer.isVisible = false
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
-//                    binding.layoutFav.root.isVisible = false
+                    binding.bannerShimmer.isVisible = true
+                    binding.shimmerFrameLayoutBanner.startShimmer()
                 },
                 doOnError = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = it.exception?.message.orEmpty()
+                    binding.bannerShimmer.isVisible = false
                 },
                 doOnEmpty = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text =
                         getString(R.string.text_data_not_available)
+                    binding.bannerShimmer.isVisible = false
                 },
             )
         }
@@ -157,28 +157,28 @@ class HomeFragment : Fragment() {
                 doOnSuccess = {
                     it.payload?.let { data -> bindNowPlayingData(data) }
                     binding.layoutState.root.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
+                    binding.layoutNowPlaying.movieShimmer.isVisible = false
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
-//                    binding.layoutFav.root.isVisible = false
+                    binding.layoutNowPlaying.movieShimmer.isVisible = true
+                    binding.layoutNowPlaying.shimmerFrameLayout.startShimmer()
                 },
                 doOnError = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = it.exception?.message.orEmpty()
-                    binding.rvNowPlaying.isVisible = false
+                    binding.layoutNowPlaying.rvListMovie.isVisible = false
+                    binding.layoutNowPlaying.movieShimmer.isVisible = false
                 },
                 doOnEmpty = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text =
                         getString(R.string.text_data_not_available)
+                    binding.layoutNowPlaying.movieShimmer.isVisible = false
                 },
             )
         }
@@ -190,28 +190,28 @@ class HomeFragment : Fragment() {
                 doOnSuccess = {
                     it.payload?.let { data -> bindPopularData(data) }
                     binding.layoutState.root.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
+                    binding.layoutPopular.movieShimmer.isVisible = false
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
-//                    binding.layoutFav.root.isVisible = false
+                    binding.layoutPopular.movieShimmer.isVisible = true
+                    binding.layoutPopular.shimmerFrameLayout.startShimmer()
                 },
                 doOnError = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = it.exception?.message.orEmpty()
-                    binding.rvPopular.isVisible = false
+                    binding.layoutPopular.rvListMovie.isVisible = false
+                    binding.layoutPopular.movieShimmer.isVisible = false
                 },
                 doOnEmpty = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text =
                         getString(R.string.text_data_not_available)
+                    binding.layoutPopular.movieShimmer.isVisible = false
                 },
             )
         }
@@ -223,28 +223,28 @@ class HomeFragment : Fragment() {
                 doOnSuccess = {
                     it.payload?.let { data -> bindUpcomingData(data) }
                     binding.layoutState.root.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
+                    binding.layoutUpcoming.movieShimmer.isVisible = false
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
-//                    binding.layoutFav.root.isVisible = false
+                    binding.layoutUpcoming.movieShimmer.isVisible = true
+                    binding.layoutUpcoming.shimmerFrameLayout.startShimmer()
                 },
                 doOnError = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = it.exception?.message.orEmpty()
-                    binding.rvUpcoming.isVisible = false
+                    binding.layoutUpcoming.rvListMovie.isVisible = false
+                    binding.layoutUpcoming.movieShimmer.isVisible = false
                 },
                 doOnEmpty = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text =
                         getString(R.string.text_data_not_available)
+                    binding.layoutUpcoming.movieShimmer.isVisible = false
                 },
             )
         }
@@ -256,28 +256,28 @@ class HomeFragment : Fragment() {
                 doOnSuccess = {
                     it.payload?.let { data -> bindTopRatedData(data) }
                     binding.layoutState.root.isVisible = false
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = false
+                    binding.layoutTopRated.movieShimmer.isVisible = false
                 },
                 doOnLoading = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = true
                     binding.layoutState.tvError.isVisible = false
-//                    binding.layoutFav.root.isVisible = false
+                    binding.layoutTopRated.movieShimmer.isVisible = true
+                    binding.layoutTopRated.shimmerFrameLayout.startShimmer()
                 },
                 doOnError = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text = it.exception?.message.orEmpty()
-                    binding.rvTopRated.isVisible = false
+                    binding.layoutTopRated.rvListMovie.isVisible = false
+                    binding.layoutTopRated.movieShimmer.isVisible = false
                 },
                 doOnEmpty = {
                     binding.layoutState.root.isVisible = true
-                    binding.layoutState.pbLoading.isVisible = false
                     binding.layoutState.tvError.isVisible = true
                     binding.layoutState.tvError.text =
                         getString(R.string.text_data_not_available)
+                    binding.layoutTopRated.movieShimmer.isVisible = false
                 },
             )
         }
@@ -287,7 +287,10 @@ class HomeFragment : Fragment() {
         val shareIntent =
             Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.imgUrl}")
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.imgUrl}",
+                )
             }
         startActivity(
             Intent.createChooser(
@@ -301,7 +304,7 @@ class HomeFragment : Fragment() {
         return data.random()
     }
 
-    private fun bindBannerImgRandomData(data: BannerImgHome) {
+    private fun bindBannerHome(data: BannerImgHome) {
         binding.layoutBannerHome.ivBannerImgHome.load("https://image.tmdb.org/t/p/w500${data.imgUrl}") {
             crossfade(true)
         }
@@ -310,18 +313,22 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindNowPlayingData(data: List<Movie>) {
+        binding.layoutNowPlaying.tvTitleListMovie.text = getString(R.string.text_now_playing_home)
         nowPlayingAdapter.submitData(data)
     }
 
     private fun bindPopularData(data: List<Movie>) {
+        binding.layoutPopular.tvTitleListMovie.text = getString(R.string.text_popular_home)
         popularAdapter.submitData(data)
     }
 
     private fun bindUpcomingData(data: List<Movie>) {
+        binding.layoutUpcoming.tvTitleListMovie.text = getString(R.string.text_upcoming_home)
         upcomingAdapter.submitData(data)
     }
 
     private fun bindTopRatedData(data: List<Movie>) {
+        binding.layoutTopRated.tvTitleListMovie.text = getString(R.string.text_top_rated_home)
         topRatedAdapter.submitData(data)
     }
 }
