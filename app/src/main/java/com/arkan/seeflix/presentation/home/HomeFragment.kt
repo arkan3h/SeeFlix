@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setClickAction()
         navigateToListMovie()
         setupListData()
         getBannerImgRandom()
@@ -68,7 +69,6 @@ class HomeFragment : Fragment() {
         getPopularData()
         getUpcomingData()
         getTopRatedData()
-        setClickAction()
     }
 
     private fun setClickAction() {
