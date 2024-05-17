@@ -11,6 +11,7 @@ import com.arkan.seeflix.data.model.Bookmark
 import com.arkan.seeflix.databinding.FragmentBookmarkBinding
 import com.arkan.seeflix.presentation.bookmark.adapter.BookmarkAdapter
 import com.arkan.seeflix.presentation.bookmark.adapter.BookmarkListener
+import com.arkan.seeflix.presentation.detail.DetailActivity
 import com.arkan.seeflix.utils.proceedWhen
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,7 +26,7 @@ class BookmarkFragment : Fragment() {
                 override fun onDeleteFavoriteClicked(item: Bookmark) {}
 
                 override fun onItemClicked(movieId: String?) {
-                    navigateToDetail(movieId)
+                    if (movieId != null) navigateToDetail(movieId)
                 }
             },
         )
@@ -85,7 +86,7 @@ class BookmarkFragment : Fragment() {
         binding.rvBookmark.adapter = this@BookmarkFragment.adapter
     }
 
-    private fun navigateToDetail(movieId: String?) {
-//        DetailActivity.startActivity(requireContext(), movieId)
+    private fun navigateToDetail(movieId: String) {
+        DetailActivity.startActivity(requireContext(), movieId)
     }
 }

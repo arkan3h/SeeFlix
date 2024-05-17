@@ -8,10 +8,6 @@ import androidx.room.PrimaryKey
 data class BookmarkEntity(
     @PrimaryKey
     var movieId: String,
-//    @ColumnInfo(name = "movie_title")
-//    var movieTitle: String?,
     @ColumnInfo(name = "movie_poster_path")
     var moviePosterPath: String?,
-//    @ColumnInfo(name = "movie_overview")
-//    var movieOverview: Double?,
 )

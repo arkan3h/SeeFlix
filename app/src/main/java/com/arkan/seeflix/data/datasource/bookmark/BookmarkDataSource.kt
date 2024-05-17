@@ -1,4 +1,4 @@
-package com.arkan.seeflix.data.datasource
+package com.arkan.seeflix.data.datasource.bookmark
 
 import com.arkan.seeflix.data.source.local.database.dao.BookmarkDao
 import com.arkan.seeflix.data.source.local.database.entity.BookmarkEntity

@@ -5,6 +5,7 @@ import com.arkan.seeflix.data.source.network.model.MovieItemResponse
 
 fun MovieItemResponse?.toListMovies() =
     Movie(
+        id = this?.id.orEmpty(),
         imgUrl = this?.posterPath.orEmpty(),
     )
 

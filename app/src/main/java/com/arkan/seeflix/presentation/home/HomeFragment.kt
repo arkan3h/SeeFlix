@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import coil.load
@@ -13,6 +12,7 @@ import com.arkan.seeflix.R
 import com.arkan.seeflix.data.model.BannerImgHome
 import com.arkan.seeflix.data.model.Movie
 import com.arkan.seeflix.databinding.FragmentHomeBinding
+import com.arkan.seeflix.presentation.detail.DetailActivity
 import com.arkan.seeflix.presentation.home.adapter.MovieAdapter
 import com.arkan.seeflix.presentation.listmovie.ListMovieActivity
 import com.arkan.seeflix.utils.proceedWhen
@@ -25,25 +25,25 @@ class HomeFragment : Fragment() {
 
     private val nowPlayingAdapter: MovieAdapter by lazy {
         MovieAdapter {
-//            DetailActivity.startActivity(requireContext(), it.id)
+            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
     private val popularAdapter: MovieAdapter by lazy {
         MovieAdapter {
-//            DetailActivity.startActivity(requireContext(), it.id)
+            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
     private val upcomingAdapter: MovieAdapter by lazy {
         MovieAdapter {
-//            DetailActivity.startActivity(requireContext(), it.id)
+            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
     private val topRatedAdapter: MovieAdapter by lazy {
         MovieAdapter {
-//            DetailActivity.startActivity(requireContext(), it.id)
+            DetailActivity.startActivity(requireContext(), it.id)
         }
     }
 
@@ -73,7 +73,9 @@ class HomeFragment : Fragment() {
 
     private fun setClickAction() {
         binding.layoutBannerHome.ibInfoBanner.setOnClickListener {
-            Toast.makeText(requireContext(), "Info Ditekan", Toast.LENGTH_SHORT).show()
+            randomMovie?.let { data ->
+                DetailActivity.startActivity(requireContext(), data.id)
+            }
         }
 
         binding.layoutBannerHome.ibShareBanner.setOnClickListener {
@@ -287,9 +289,12 @@ class HomeFragment : Fragment() {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, "Watch this movie! ${movie.title}\nhttps://image.tmdb.org/t/p/w500/${movie.imgUrl}")
             }
-        startActivity(Intent.createChooser(
-            shareIntent,
-            "Share Movie"))
+        startActivity(
+            Intent.createChooser(
+                shareIntent,
+                "Share Movie",
+            ),
+        )
     }
 
     private fun setupBannerImgRandom(data: List<BannerImgHome>): BannerImgHome {
